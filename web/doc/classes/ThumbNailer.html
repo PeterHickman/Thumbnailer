@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: ThumbNailer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">ThumbNailer</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/thumbnailer_rb.html">
+                thumbnailer.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Scales the given image to fit within a box of the required size with either
+a transparent background or one specified by the user. Should the source
+image be a JPEG with the image orientation set in the EXIF data then the
+thumbnail will be rotated to the correct orientation.
+</p>
+<p>
+The return value is the thumbnail data in <tt>png</tt> format. Both the
+default colour and the output type can be changed.
+</p>
+<p>
+Performance is sufficient that this can be used to generate thumbnails on
+the fly.
+</p>
+<p>
+Example using the defaults:
+</p>
+<pre>
+ f = File.new('happytree_t.png', 'w')
+ f.puts ThumbNailer.box_with_transparancy('happytree.jpg', 125)
+ f.close
+</pre>
+<p>
+Example changing the defaults:
+</p>
+<pre>
+ ThumbNailer.colours(1.0, 0.5, 0.1)
+ ThumbNailer.output_gif
+
+ f = File.new('happytree_t.gif', 'w')
+ f.puts ThumbNailer.box_with_background('happytree.jpg', 125)
+ f.close
+</pre>
+<p>
+The <a href="ThumbNailer.html#M000010">colours</a> used for the background
+or transparancy can be set on a per call basis:
+</p>
+<pre>
+ f = File.new('happytree_t.gif', 'w')
+ f.puts ThumbNailer.box_with_background('happytree.jpg', 125, 0.8, 0.2, 0.7)
+ f.close
+</pre>
+<p>
+Whatever colour is used for transparancy there is always a chance that it
+is used in a picture and that the resulting thumbnail will look like Swiss
+Cheese. The alternative is to use the <a
+href="ThumbNailer.html#M000002">box_calc_transparancy</a> method which will
+search the image for an unused colour to use for the transparancy colour.
+As this is extra work over and above that done by <a
+href="ThumbNailer.html#M000001">box_with_transparancy</a> the method is a
+little slower. However the search is conducted over the scaled image and
+not the original source so if your thumbnails are small (125 pixels or
+less) then you can still use this method on the fly.
+</p>
+<p>
+A few extra function that I have found useful have been added to the
+package just so everything is in one place.
+</p>
+<pre>
+ f = File.new('happytree_t.gif', 'w')
+ f.puts ThumbNailer.max_width('happytree.jpg', 125)
+ f.close
+</pre>
+<p>
+This will scale the image so that it is no wider than <tt>size</tt> whilest
+maintaining the aspect ratio. There is also <a
+href="ThumbNailer.html#M000005">max_height</a> to scale the image so that
+it is no taller than <tt>size</tt> and <a
+href="ThumbNailer.html#M000006">max_either</a> to scale the image if either
+width or height is larger than <tt>size</tt>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000002">box_calc_transparancy</a>&nbsp;&nbsp;
+      <a href="#M000003">box_with_background</a>&nbsp;&nbsp;
+      <a href="#M000001">box_with_transparancy</a>&nbsp;&nbsp;
+      <a href="#M000010">colours</a>&nbsp;&nbsp;
+      <a href="#M000006">max_either</a>&nbsp;&nbsp;
+      <a href="#M000005">max_height</a>&nbsp;&nbsp;
+      <a href="#M000004">max_width</a>&nbsp;&nbsp;
+      <a href="#M000008">output_gif</a>&nbsp;&nbsp;
+      <a href="#M000009">output_jpg</a>&nbsp;&nbsp;
+      <a href="#M000007">output_png</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VERSION</td>
+          <td>=</td>
+          <td class="context-item-value">'1.4.0'</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000002.html');return false;">
+          <span class="method-name">box_calc_transparancy</span><span class="method-args">(source, size, r = @@r, g = @@g, b = @@b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Like <a href="ThumbNailer.html#M000001">box_with_transparancy</a> this
+method scales the image within a box of <tt>size</tt> width and height.
+This method searhes the image for an unused color and selects that for
+transparency. If no unused colour is found then it uses the default or
+given colour.
+</p>
+<p>
+Given that it must find all the <a
+href="ThumbNailer.html#M000010">colours</a> that are used in an image to
+find just one unused colour this is much slower than the plain <a
+href="ThumbNailer.html#M000001">box_with_transparancy</a>. However the
+search for an unused colour is conducted against the scaled image so it
+will not necessarily be as bad as you might imagine.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000003.html');return false;">
+          <span class="method-name">box_with_background</span><span class="method-args">(source, size, r = @@r, g = @@g, b = @@b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Given the filename of an image and the required size of the thumbnail this
+will scale and center the image to fit within the box against the
+background colour.
+</p>
+<p>
+If the image is smaller than the box then it will be centered within the
+box as is.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000001.html');return false;">
+          <span class="method-name">box_with_transparancy</span><span class="method-args">(source, size, r = @@r, g = @@g, b = @@b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Given the filename of an image and the required size of the thumbnail this
+will scale and center the image to fit within the box against a transparent
+background.
+</p>
+<p>
+If the image is smaller than the box then it will be centered within the
+box as is.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000010.html');return false;">
+          <span class="method-name">colours</span><span class="method-args">(r, g, b)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Change the defaults that will be used to set the background or transparency
+unless they are overridden in a call to <a
+href="ThumbNailer.html#M000003">box_with_background</a> or <a
+href="ThumbNailer.html#M000001">box_with_transparancy</a>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000006.html');return false;">
+          <span class="method-name">max_either</span><span class="method-args">(source, size)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scale the source image so that it is no wider or higher than <tt>size</tt>
+or return the image as is if it is already <tt>size</tt> or smaller
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000005.html');return false;">
+          <span class="method-name">max_height</span><span class="method-args">(source, size)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scale the source image so that it is no higher than <tt>size</tt> or return
+the image as is if it is already <tt>size</tt> or smaller
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000004.html');return false;">
+          <span class="method-name">max_width</span><span class="method-args">(source, size)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Scale the source image so that it is no wider than <tt>size</tt> or return
+the image as is if it is already <tt>size</tt> or smaller
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000008.html');return false;">
+          <span class="method-name">output_gif</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Change the output type to <tt>gif</tt>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000009.html');return false;">
+          <span class="method-name">output_jpg</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Change the output type to <tt>jpg</tt>
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="ThumbNailer.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('ThumbNailer.src/M000007.html');return false;">
+          <span class="method-name">output_png</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Change the output type to <tt>png</tt> (default)
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

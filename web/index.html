@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>ThumbNailer project Page</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+	</head>
+	<body>
+		<h1>Welcome to the ThumbNailer project page</h1>
+		<p>ThumbNailer uses <a href="http://gd2.rubyforge.org/">Ruby/GD2</a> to scales the given 
+		image to fit within a box of the required size with either a transparent background or 
+		one specified by the user. Should the source image be a JPEG with the image orientation 
+		set in the EXIF data then the thumbnail will be rotated to the correct orientation.</p>
+		<p>The return value is the thumbnail data in png format. Both the background / transparancy 
+		colour and the output type can be changed.</p>
+		<p>Performance is sufficient that this can be used to generate thumbnails on the fly.</p>
+		<h2>Example using the defaults:</h2>
+<pre>
+f = File.new('happytree_t.png', 'w')
+f.puts ThumbNailer.box_with_transparancy('happytree.jpg', 125)
+f.close
+</pre>
+		<h2>Example changing the defaults:</h2>
+<pre>
+ThumbNailer.colours(1.0, 0.5, 0.1)
+ThumbNailer.output_gif
+
+f = File.new('happytree_t.gif', 'w')
+f.puts ThumbNailer.box_with_background('happytree.jpg', 125)
+f.close
+</pre>
+		<p>The colours used for the background or transparancy can be set on a per call basis:</p>
+<pre>
+f = File.new('happytree_t.gif', 'w')
+f.puts ThumbNailer.box_with_background('happytree.jpg', 125, 0.8, 0.2, 0.7)
+f.close
+</pre>
+		<h2>The transparancy colour</h2>
+		<p>Whatever colour is used for transparancy there is always a chance that
+		it is used in a picture and that the resulting thumbnail will look like
+		Swiss Cheese. The alternative is to use the box_calc_transparancy method
+		which will search the image for an unused colour to use for the transparancy
+		colour. As this is extra work over and above that done by box_with_transparancy
+		the method is a little slower. However the search is conducted over the scaled
+		image and not the original source so if your thumbnails are small (125 pixels
+		or less) then you can still use this method on the fly.</p>
+		<h2>Useful stuff</h2>
+		<p>A few extra function that I have found useful have been added to the 
+		package just so everything is in one place.</p>
+<pre>
+f = File.new('happytree_t.gif', 'w')
+f.puts ThumbNailer.max_width('happytree.jpg', 125)
+f.close
+</pre>
+		<p>This will scale the image so that it is no wider than size whilest
+		maintaining the aspect ratio. There is also max_height to scale the
+		image so that it is no taller than size and max_either to scale the 
+		image if either width or height is larger than size.</p>
+		<h2>Documentation</h2>
+		<p>The documentation can be found <a href="doc/index.html">here</a></p>
+	</body>
+</html>

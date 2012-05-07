@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>box_with_transparancy (ThumbNailer)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File thumbnailer.rb, line 77</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">box_with_transparancy</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">size</span>, <span class="ruby-identifier">r</span> = <span class="ruby-ivar">@@r</span>, <span class="ruby-identifier">g</span> = <span class="ruby-ivar">@@g</span>, <span class="ruby-identifier">b</span> = <span class="ruby-ivar">@@b</span>)
+    <span class="ruby-identifier">image</span> = <span class="ruby-constant">GD2</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">import</span>(<span class="ruby-identifier">source</span>)
+
+    <span class="ruby-identifier">dstX</span>, <span class="ruby-identifier">dstY</span>, <span class="ruby-identifier">dstW</span>, <span class="ruby-identifier">dstH</span>, <span class="ruby-identifier">image</span> = <span class="ruby-identifier">resize_source</span>(<span class="ruby-identifier">image</span>, <span class="ruby-identifier">size</span>)
+
+    <span class="ruby-identifier">thumbnail</span> = <span class="ruby-constant">GD2</span><span class="ruby-operator">::</span><span class="ruby-constant">Image</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">size</span>, <span class="ruby-identifier">size</span>)
+    <span class="ruby-identifier">thumbnail</span>.<span class="ruby-identifier">transparent</span> = <span class="ruby-constant">GD2</span><span class="ruby-operator">::</span><span class="ruby-constant">Color</span>[<span class="ruby-identifier">r</span>, <span class="ruby-identifier">g</span>, <span class="ruby-identifier">b</span>, <span class="ruby-constant">GD2</span><span class="ruby-operator">::</span><span class="ruby-constant">ALPHA_TRANSPARENT</span>]
+    <span class="ruby-identifier">thumbnail</span>.<span class="ruby-identifier">draw</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">canvas</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">canvas</span>.<span class="ruby-identifier">color</span> = <span class="ruby-constant">GD2</span><span class="ruby-operator">::</span><span class="ruby-constant">Color</span>[<span class="ruby-identifier">r</span>, <span class="ruby-identifier">g</span>, <span class="ruby-identifier">b</span>]
+            <span class="ruby-identifier">canvas</span>.<span class="ruby-identifier">point</span>(<span class="ruby-value">1</span>,<span class="ruby-value">1</span>)
+            <span class="ruby-identifier">canvas</span>.<span class="ruby-identifier">fill</span>()
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">thumbnail</span>.<span class="ruby-identifier">copy_from</span>(<span class="ruby-identifier">image</span>,<span class="ruby-identifier">dstX</span>,<span class="ruby-identifier">dstY</span>,<span class="ruby-value">0</span>,<span class="ruby-value">0</span>,<span class="ruby-identifier">dstW</span>,<span class="ruby-identifier">dstH</span>)
+
+          <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">create_output</span>(<span class="ruby-identifier">thumbnail</span>, <span class="ruby-identifier">source</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

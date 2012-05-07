@@ -1,0 +1,5 @@
+
+ThumbNailer - Generate thumbnails from image files
+Copyright (C) 2008 Peter Hickman
+
+Based on the GD2 library this takes an image and scales it to fit within a box
